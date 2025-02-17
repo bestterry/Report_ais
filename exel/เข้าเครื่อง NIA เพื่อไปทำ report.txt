@@ -1,0 +1,14 @@
+Anydesk : 1610692084
+Pass : N1ceword
+
+remote 10.235.6.232
+User name : AISCAS\tanam619
+
+จากนั้น VPN ในเครื่อง Anydesk
+VPN : 110.49.139.6
+TOKEN PASS : T5da3938f@m1 โทรหาพี่บัณฑิตเพื่อขอ token account ธนมล 619 เบอร์ 0932347300
+
+เครื่อง 94 : report
+เครื่อง 119 : server
+
+รหัสเข้าเครื่อง Remote Desktop : Starbuck#99999Admin#202588lotto

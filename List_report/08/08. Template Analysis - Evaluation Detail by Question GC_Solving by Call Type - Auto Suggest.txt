@@ -1,0 +1,521 @@
+select	[a11].[CCSiteName]  [CustCol_Site],
+	[a11].[CCSiteKey]  [CCSiteKey],
+	[a11].[CCAgentSupervisorKey]  [CCAgentSupervisorKey],
+	[a11].[TemplateQuestionKey]  [TemplateQuestionKey],
+	convert(datetime, [a11].[PublishedOnUTC])  [PublishedOnUTC],
+	convert(date,[a11].[PublishedOnUTC])  [PublishedOn],
+	[a11].[PrimaryMediaKey]  [MediaKey],
+	case when [a11].[PrimaryMediaKey] < = 0 then 0 else [a11].[FilesEvaluated] end  [FilesEvaluated],
+	Case when [a11].[IgnoredForAgentReporting] = 0 then 'No' else 'Yes' end  [FlagYesNo],
+	[a11].[InitialTemplateInstanceId]  [InitialTemplateInstanceId],
+	max('<a TITLE="'+CONVERT(varchar(50),[a11].[DisplayId])+'" href="'+[a11].[ParameterValue]+'Evaluations.aspx?TemplateInstanceId='+convert(varchar(20),[a11].[InitialTemplateInstanceId])+'"  TARGET="EFI_View"'+'>'+[a11].[DisplayId]+'</a>')  [EvalIDDesc],
+	[a11].[CreatedByUserID]  [CreatedByUserID],
+	Case WHEN [a11].[CurrentQuestionNotes] IS NOT NULL Then [a11].[CurrentQuestionNotes] ELSE '' END  [AnswerNotes],
+	Case WHEN [a11].[CurrentAnswerContent] IS NOT NULL Then [a11].[CurrentAnswerContent] ELSE '' END  [AnswerContent],
+	[a11].[CurrentTemplateAnswerKey]  [CurrentTemplateAnswerKey],
+	[a11].[AgentID]  [AgentID],
+	max([a11].[AgentID])  [AgentID0],
+	[a11].[AgentID]  [AgentID1],
+	[a12].[GroupName]  [GroupName],
+	[a11].[TemplateCategoryKey]  [TemplateCategoryKey],
+	[a11].[RecordedDateKey]  [RecordedDateKey],
+	sum([a11].[AnswerAvailablePoints])  [WJXBFS1],
+	sum([a11].[CurrentScoredPoints])  [WJXBFS2]
+into ##TC24K4ITMMD000
+from	[Dossier].[fctEvaluationQuestionCurrentAnswer]	[a11]
+	left outer join	[Evals].[EvaluationOrganization]	[a12]
+	  on 	([a11].[EvaluationKey] = [a12].[EvaluationKey])
+where	(convert(date,[a11].[PublishedOnUTC]) between '20250101' and '20250103'
+ and [a11].[IgnoredForAgentReporting] = 0
+ and convert(date,[a11].[PublishedOnUTC]) is not null
+ and [a11].[TemplateKey] in (230)
+ and [a11].[RescoreIsActive] = 0
+ and Case when ([a11].[AcknowledgedOnUTC] Is Null) then 0 else 1 end in (1, 0)
+ and [a11].[IsPurgedInEvals] in (0)
+ and [a11].[EvaluationType] not in (N'C-')
+ and [a11].[EvaluationType] in (N'S-', N'E-'))
+group by	[a11].[CCSiteName],
+	[a11].[CCSiteKey],
+	[a11].[CCAgentSupervisorKey],
+	[a11].[TemplateQuestionKey],
+	convert(datetime, [a11].[PublishedOnUTC]),
+	convert(date,[a11].[PublishedOnUTC]),
+	[a11].[PrimaryMediaKey],
+	case when [a11].[PrimaryMediaKey] < = 0 then 0 else [a11].[FilesEvaluated] end,
+	Case when [a11].[IgnoredForAgentReporting] = 0 then 'No' else 'Yes' end,
+	[a11].[InitialTemplateInstanceId],
+	[a11].[CreatedByUserID],
+	Case WHEN [a11].[CurrentQuestionNotes] IS NOT NULL Then [a11].[CurrentQuestionNotes] ELSE '' END,
+	Case WHEN [a11].[CurrentAnswerContent] IS NOT NULL Then [a11].[CurrentAnswerContent] ELSE '' END,
+	[a11].[CurrentTemplateAnswerKey],
+	[a11].[AgentID],
+	[a11].[AgentID],
+	[a12].[GroupName],
+	[a11].[TemplateCategoryKey],
+	[a11].[RecordedDateKey]  -- ReportName = 08. Template Analysis - Evaluation Detail by Question GC_Solving by Call Type - Auto Suggest, ReportGUID = 1870775841F80650647474B6FC44634B, UserName = AISNexidiaESI~corp-ais900~nexadmin (9A09A74012C74B01B483BE4D3F4C273B)
+
+select	[a11].[CCSiteName]  [CustCol_Site],
+	[a11].[CCSiteKey]  [CCSiteKey],
+	max([a11].[CCSiteName])  [CCSiteName],
+	[a11].[CCAgentSupervisorKey]  [CCAgentSupervisorKey],
+	[a12].[TemplateQuestionKey]  [TemplateQuestionKey],
+	convert(datetime, [a11].[PublishedOnUTC])  [PublishedOnUTC],
+	convert(date,[a11].[PublishedOnUTC])  [PublishedOn],
+	case when [a11].[PrimaryMediaKey] < = 0 then 0 else [a11].[FilesEvaluated] end  [FilesEvaluated],
+	Case when [a11].[IgnoredForAgentReporting] = 0 then 'No' else 'Yes' end  [FlagYesNo],
+	[a11].[InitialTemplateInstanceId]  [InitialTemplateInstanceId],
+	max('<a TITLE="'+CONVERT(varchar(50),[a11].[DisplayId])+'" href="'+[a11].[ParameterValue]+'Evaluations.aspx?TemplateInstanceId='+convert(varchar(20),[a11].[InitialTemplateInstanceId])+'"  TARGET="EFI_View"'+'>'+[a11].[DisplayId]+'</a>')  [EvalIDDesc],
+	[a11].[CreatedByUserID]  [CreatedByUserID],
+	Case WHEN [a12].[CurrentQuestionNotes] IS NOT NULL Then [a12].[CurrentQuestionNotes] ELSE '' END  [AnswerNotes],
+	Case WHEN [a12].[CurrentAnswerContent] IS NOT NULL Then [a12].[CurrentAnswerContent] ELSE '' END  [AnswerContent],
+	[a11].[AgentID]  [AgentID],
+	max([a11].[AgentID])  [AgentID0],
+	[a11].[AgentID]  [AgentID1],
+	[a14].[GroupName]  [GroupName],
+	[a12].[TemplateCategoryKey]  [TemplateCategoryKey],
+	sum([a11].[EvaluationTimeInSeconds])  [WJXBFS1]
+into ##TMH6LD862MD001
+from	[Dossier].[vfctEvaluation]	[a11]
+	join	[MSTR].[fctEvaluationQuestion]	[a12]
+	  on 	([a11].[EvaluationKey] = [a12].[EvaluationKey])
+	join	[MSTR].[fctEvaluationQuestion]	[a13]
+	  on 	([a12].[TemplateQuestionKey] = [a13].[TemplateQuestionKey] and 
+	[a12].[fctEvaluationCategoryKey] = [a13].[fctEvaluationCategoryKey] and 
+	[a12].[fctEvaluationQuestionKey] = [a13].[fctEvaluationQuestionKey])
+	left outer join	[Evals].[EvaluationOrganization]	[a14]
+	  on 	([a11].[EvaluationKey] = [a14].[EvaluationKey])
+where	(convert(date,[a11].[PublishedOnUTC]) between '20250101' and '20250103'
+ and [a11].[IgnoredForAgentReporting] = 0
+ and convert(date,[a11].[PublishedOnUTC]) is not null
+ and [a11].[TemplateKey] in (230)
+ and [a11].[RescoreIsActive] = 0
+ and Case when ([a11].[AcknowledgedOnUTC] Is Null) then 0 else 1 end in (1, 0)
+ and [a11].[IsPurgedInEvals] in (0)
+ and [a11].[EvaluationType] not in (N'C-')
+ and [a11].[EvaluationType] in (N'S-', N'E-'))
+group by	[a11].[CCSiteName],
+	[a11].[CCSiteKey],
+	[a11].[CCAgentSupervisorKey],
+	[a12].[TemplateQuestionKey],
+	convert(datetime, [a11].[PublishedOnUTC]),
+	convert(date,[a11].[PublishedOnUTC]),
+	case when [a11].[PrimaryMediaKey] < = 0 then 0 else [a11].[FilesEvaluated] end,
+	Case when [a11].[IgnoredForAgentReporting] = 0 then 'No' else 'Yes' end,
+	[a11].[InitialTemplateInstanceId],
+	[a11].[CreatedByUserID],
+	Case WHEN [a12].[CurrentQuestionNotes] IS NOT NULL Then [a12].[CurrentQuestionNotes] ELSE '' END,
+	Case WHEN [a12].[CurrentAnswerContent] IS NOT NULL Then [a12].[CurrentAnswerContent] ELSE '' END,
+	[a11].[AgentID],
+	[a11].[AgentID],
+	[a14].[GroupName],
+	[a12].[TemplateCategoryKey]  -- ReportName = 08. Template Analysis - Evaluation Detail by Question GC_Solving by Call Type - Auto Suggest, ReportGUID = 1870775841F80650647474B6FC44634B, UserName = AISNexidiaESI~corp-ais900~nexadmin (9A09A74012C74B01B483BE4D3F4C273B)
+
+select	[a11].[CCSiteName]  [CustCol_Site],
+	[a11].[CCSiteKey]  [CCSiteKey],
+	[a11].[CCAgentSupervisorKey]  [CCAgentSupervisorKey],
+	[a11].[TemplateQuestionKey]  [TemplateQuestionKey],
+	convert(datetime, [a11].[PublishedOnUTC])  [PublishedOnUTC],
+	convert(date,[a11].[PublishedOnUTC])  [PublishedOn],
+	[a11].[PrimaryMediaKey]  [MediaKey],
+	case when [a11].[PrimaryMediaKey] < = 0 then 0 else [a11].[FilesEvaluated] end  [FilesEvaluated],
+	Case when [a11].[IgnoredForAgentReporting] = 0 then 'No' else 'Yes' end  [FlagYesNo],
+	[a11].[InitialTemplateInstanceId]  [InitialTemplateInstanceId],
+	max('<a TITLE="'+CONVERT(varchar(50),[a11].[DisplayId])+'" href="'+[a11].[ParameterValue]+'Evaluations.aspx?TemplateInstanceId='+convert(varchar(20),[a11].[InitialTemplateInstanceId])+'"  TARGET="EFI_View"'+'>'+[a11].[DisplayId]+'</a>')  [EvalIDDesc],
+	[a11].[CreatedByUserID]  [CreatedByUserID],
+	Case WHEN [a11].[CurrentQuestionNotes] IS NOT NULL Then [a11].[CurrentQuestionNotes] ELSE '' END  [AnswerNotes],
+	Case WHEN [a11].[CurrentAnswerContent] IS NOT NULL Then [a11].[CurrentAnswerContent] ELSE '' END  [AnswerContent],
+	[a11].[CurrentTemplateAnswerKey]  [CurrentTemplateAnswerKey],
+	[a11].[AgentID]  [AgentID],
+	max([a11].[AgentID])  [AgentID0],
+	[a11].[AgentID]  [AgentID1],
+	[a12].[GroupName]  [GroupName],
+	[a11].[TemplateCategoryKey]  [TemplateCategoryKey],
+	[a11].[RecordedDateKey]  [RecordedDateKey],
+	sum([a11].[CurrentAnswerScoredPoints])  [WJXBFS1]
+into ##TTP8PPPFEMD002
+from	[Dossier].[fctEvaluationQuestionCurrentAnswer]	[a11]
+	left outer join	[Evals].[EvaluationOrganization]	[a12]
+	  on 	([a11].[EvaluationKey] = [a12].[EvaluationKey])
+where	(convert(date,[a11].[PublishedOnUTC]) between '20250101' and '20250103'
+ and [a11].[IgnoredForAgentReporting] = 0
+ and convert(date,[a11].[PublishedOnUTC]) is not null
+ and [a11].[TemplateKey] in (230)
+ and [a11].[RescoreIsActive] = 0
+ and Case when ([a11].[AcknowledgedOnUTC] Is Null) then 0 else 1 end in (1, 0)
+ and [a11].[IsPurgedInEvals] in (0)
+ and [a11].[EvaluationType] not in (N'C-')
+ and [a11].[EvaluationType] in (N'S-', N'E-')
+ and [a11].[IsNA] = 0
+ and [a11].[IsSkipped] = 0)
+group by	[a11].[CCSiteName],
+	[a11].[CCSiteKey],
+	[a11].[CCAgentSupervisorKey],
+	[a11].[TemplateQuestionKey],
+	convert(datetime, [a11].[PublishedOnUTC]),
+	convert(date,[a11].[PublishedOnUTC]),
+	[a11].[PrimaryMediaKey],
+	case when [a11].[PrimaryMediaKey] < = 0 then 0 else [a11].[FilesEvaluated] end,
+	Case when [a11].[IgnoredForAgentReporting] = 0 then 'No' else 'Yes' end,
+	[a11].[InitialTemplateInstanceId],
+	[a11].[CreatedByUserID],
+	Case WHEN [a11].[CurrentQuestionNotes] IS NOT NULL Then [a11].[CurrentQuestionNotes] ELSE '' END,
+	Case WHEN [a11].[CurrentAnswerContent] IS NOT NULL Then [a11].[CurrentAnswerContent] ELSE '' END,
+	[a11].[CurrentTemplateAnswerKey],
+	[a11].[AgentID],
+	[a11].[AgentID],
+	[a12].[GroupName],
+	[a11].[TemplateCategoryKey],
+	[a11].[RecordedDateKey]  -- ReportName = 08. Template Analysis - Evaluation Detail by Question GC_Solving by Call Type - Auto Suggest, ReportGUID = 1870775841F80650647474B6FC44634B, UserName = AISNexidiaESI~corp-ais900~nexadmin (9A09A74012C74B01B483BE4D3F4C273B)
+
+select	distinct [s21].[CCAgentGroup]  [GroupName],
+	[s23].[AgentID]  [AgentID],
+	[s23].[AgentID]  [AgentID1],
+	[s24].[CurrentTemplateAnswerKey]  [CurrentTemplateAnswerKey],
+	Case WHEN [s24].[CurrentAnswerContent] IS NOT NULL Then [s24].[CurrentAnswerContent] ELSE '' END  [AnswerContent],
+	Case WHEN [s24].[CurrentQuestionNotes] IS NOT NULL Then [s24].[CurrentQuestionNotes] ELSE '' END  [AnswerNotes],
+	[s23].[CreatedByUserID]  [CreatedByUserID],
+	[s23].[InitialTemplateInstanceId]  [InitialTemplateInstanceId],
+	Case when [s23].[IgnoredForAgentReporting] = 0 then 'No' else 'Yes' end  [FlagYesNo],
+	case when [s23].[PrimaryMediaKey] < = 0 then 0 else [s23].[FilesEvaluated] end  [FilesEvaluated],
+	[s23].[PrimaryMediaKey]  [MediaKey],
+	convert(date,[s23].[PublishedOnUTC])  [PublishedOn],
+	convert(datetime, [s23].[PublishedOnUTC])  [PublishedOnUTC],
+	[s24].[TemplateQuestionKey]  [TemplateQuestionKey],
+	[s23].[CCAgentSupervisorKey]  [CCAgentSupervisorKey],
+	[s23].[CCSiteKey]  [CCSiteKey],
+	[s23].[CCSiteName]  [CustCol_Site]
+into ##TKBAJMR7USQ003
+from	[dbo].[dimCCAgentGroup]	[s21]
+	left outer join	[Evals].[EvaluationOrganization]	[s22]
+	  on 	([s21].[CCAgentGroup] = [s22].[GroupName])
+	left outer join	[Dossier].[vfctEvaluation]	[s23]
+	  on 	([s22].[EvaluationKey] = [s23].[EvaluationKey])
+	left outer join	[Dossier].[fctEvaluationQuestionCurrentAnswer]	[s24]
+	  on 	(Case when ([s23].[AcknowledgedOnUTC] Is Null) then 0 else 1 end = Case when ([s24].[AcknowledgedOnUTC] Is Null) then 0 else 1 end and 
+	[s22].[EvaluationKey] = [s24].[EvaluationKey] and 
+	[s23].[PrimaryMediaKey] = [s24].[PrimaryMediaKey] and 
+	[s23].[RecordedDateKey] = [s24].[RecordedDateKey] and 
+	[s23].[TemplateKey] = [s24].[TemplateKey])
+where	(convert(date,[s23].[PublishedOnUTC]) between '20250101' and '20250103'
+ and [s23].[IgnoredForAgentReporting] = 0
+ and convert(date,[s23].[PublishedOnUTC]) is not null
+ and [s23].[TemplateKey] in (230)
+ and [s23].[RescoreIsActive] = 0
+ and [s23].[IsPurgedInEvals] in (0)
+ and [s23].[EvaluationType] not in (N'C-')
+ and [s23].[EvaluationType] in (N'S-', N'E-'))  -- ReportName = 08. Template Analysis - Evaluation Detail by Question GC_Solving by Call Type - Auto Suggest, ReportGUID = 1870775841F80650647474B6FC44634B, UserName = AISNexidiaESI~corp-ais900~nexadmin (9A09A74012C74B01B483BE4D3F4C273B)
+
+select	distinct [pa11].[GroupName]  [GroupName],
+	[pa11].[AgentID1]  [AgentID],
+	[pa11].[AgentID]  [AgentID1],
+	[pa11].[AgentID0]  [AgentID2],
+	[a13].[CurrentTemplateAnswerKey]  [CurrentTemplateAnswerKey],
+	[pa11].[AnswerContent]  [AnswerContent],
+	[pa11].[AnswerNotes]  [AnswerNotes],
+	[pa11].[CreatedByUserID]  [CreatedByUserID],
+	[pa11].[InitialTemplateInstanceId]  [InitialTemplateInstanceId],
+	[pa11].[EvalIDDesc]  [EvalIDDesc],
+	[pa11].[FlagYesNo]  [FlagYesNo],
+	[pa11].[FilesEvaluated]  [FilesEvaluated],
+	[a13].[PrimaryMediaKey]  [MediaKey],
+	[pa11].[PublishedOn]  [PublishedOn],
+	[pa11].[PublishedOnUTC]  [PublishedOnUTC],
+	[pa11].[TemplateQuestionKey]  [TemplateQuestionKey],
+	[pa11].[CCAgentSupervisorKey]  [CCAgentSupervisorKey],
+	[pa11].[CCSiteKey]  [CCSiteKey],
+	[pa11].[CCSiteName]  [CCSiteName],
+	[pa11].[CustCol_Site]  [CustCol_Site],
+	[pa11].[TemplateCategoryKey]  [TemplateCategoryKey],
+	[a12].[TemplateCategoryName]  [TemplateCategoryName],
+	[a12].[Position]  [Position0],
+	[a13].[RecordedDateKey]  [RecordedDateKey]
+into ##TASCYI90QOG004
+from	##TMH6LD862MD001	[pa11]
+	left outer join	[Evals].[dimTemplateCategory]	[a12]
+	  on 	([pa11].[TemplateCategoryKey] = [a12].[TemplateCategoryKey])
+	left outer join	[Dossier].[fctEvaluationQuestionCurrentAnswer]	[a13]
+	  on 	([a12].[TemplateKey] = [a13].[TemplateKey] and 
+	[pa11].[AgentID1] = [a13].[AgentID] and 
+	[pa11].[AgentID] = [a13].[AgentID] and 
+	[pa11].[AnswerContent] = Case WHEN [a13].[CurrentAnswerContent] IS NOT NULL Then [a13].[CurrentAnswerContent] ELSE '' END and 
+	[pa11].[AnswerNotes] = Case WHEN [a13].[CurrentQuestionNotes] IS NOT NULL Then [a13].[CurrentQuestionNotes] ELSE '' END and 
+	[pa11].[CCAgentSupervisorKey] = [a13].[CCAgentSupervisorKey] and 
+	[pa11].[CCSiteKey] = [a13].[CCSiteKey] and 
+	[pa11].[CreatedByUserID] = [a13].[CreatedByUserID] and 
+	[pa11].[CustCol_Site] = [a13].[CCSiteName] and 
+	[pa11].[FilesEvaluated] = case when [a13].[PrimaryMediaKey] < = 0 then 0 else [a13].[FilesEvaluated] end and 
+	[pa11].[FlagYesNo] = Case when [a13].[IgnoredForAgentReporting] = 0 then 'No' else 'Yes' end and 
+	[pa11].[InitialTemplateInstanceId] = [a13].[InitialTemplateInstanceId] and 
+	[pa11].[PublishedOnUTC] = convert(datetime, [a13].[PublishedOnUTC]) and 
+	[pa11].[PublishedOn] = convert(date,[a13].[PublishedOnUTC]) and 
+	[pa11].[TemplateQuestionKey] = [a13].[TemplateQuestionKey])
+	join	##TKBAJMR7USQ003	[pa14]
+	  on 	([a13].[CurrentTemplateAnswerKey] = [pa14].[CurrentTemplateAnswerKey] and 
+	[a13].[PrimaryMediaKey] = [pa14].[MediaKey] and 
+	[pa11].[AgentID1] = [pa14].[AgentID] and 
+	[pa11].[AgentID] = [pa14].[AgentID1] and 
+	[pa11].[AnswerContent] = [pa14].[AnswerContent] and 
+	[pa11].[AnswerNotes] = [pa14].[AnswerNotes] and 
+	[pa11].[CCAgentSupervisorKey] = [pa14].[CCAgentSupervisorKey] and 
+	[pa11].[CCSiteKey] = [pa14].[CCSiteKey] and 
+	[pa11].[CreatedByUserID] = [pa14].[CreatedByUserID] and 
+	[pa11].[CustCol_Site] = [pa14].[CustCol_Site] and 
+	[pa11].[FilesEvaluated] = [pa14].[FilesEvaluated] and 
+	[pa11].[FlagYesNo] = [pa14].[FlagYesNo] and 
+	[pa11].[GroupName] = [pa14].[GroupName] and 
+	[pa11].[InitialTemplateInstanceId] = [pa14].[InitialTemplateInstanceId] and 
+	[pa11].[PublishedOnUTC] = [pa14].[PublishedOnUTC] and 
+	[pa11].[PublishedOn] = [pa14].[PublishedOn] and 
+	[pa11].[TemplateQuestionKey] = [pa14].[TemplateQuestionKey])  -- ReportName = 08. Template Analysis - Evaluation Detail by Question GC_Solving by Call Type - Auto Suggest, ReportGUID = 1870775841F80650647474B6FC44634B, UserName = AISNexidiaESI~corp-ais900~nexadmin (9A09A74012C74B01B483BE4D3F4C273B)
+
+select	[pa11].[CustCol_Site]  [CustCol_Site],
+	[pa11].[CCSiteKey]  [CCSiteKey],
+	[pa11].[CCAgentSupervisorKey]  [CCAgentSupervisorKey],
+	[pa11].[TemplateQuestionKey]  [TemplateQuestionKey],
+	[pa11].[PublishedOnUTC]  [PublishedOnUTC],
+	[pa11].[PublishedOn]  [PublishedOn],
+	[pa11].[MediaKey]  [MediaKey],
+	[pa11].[FilesEvaluated]  [FilesEvaluated],
+	[pa11].[FlagYesNo]  [FlagYesNo],
+	[pa11].[InitialTemplateInstanceId]  [InitialTemplateInstanceId],
+	[pa11].[EvalIDDesc]  [EvalIDDesc],
+	[pa11].[CreatedByUserID]  [CreatedByUserID],
+	[pa11].[AnswerNotes]  [AnswerNotes],
+	[pa11].[AnswerContent]  [AnswerContent],
+	[pa11].[CurrentTemplateAnswerKey]  [CurrentTemplateAnswerKey],
+	[pa11].[AgentID]  [AgentID],
+	[pa11].[AgentID0]  [AgentID0],
+	[pa11].[AgentID1]  [AgentID1],
+	[pa11].[GroupName]  [GroupName],
+	[pa11].[TemplateCategoryKey]  [TemplateCategoryKey],
+	[pa11].[RecordedDateKey]  [RecordedDateKey]
+into ##TLDFPJZE2OJ005
+from	##TC24K4ITMMD000	[pa11] 
+union
+select	[pa11].[CustCol_Site]  [CustCol_Site],
+	[pa11].[CCSiteKey]  [CCSiteKey],
+	[pa11].[CCAgentSupervisorKey]  [CCAgentSupervisorKey],
+	[pa11].[TemplateQuestionKey]  [TemplateQuestionKey],
+	[pa11].[PublishedOnUTC]  [PublishedOnUTC],
+	[pa11].[PublishedOn]  [PublishedOn],
+	[pa11].[MediaKey]  [MediaKey],
+	[pa11].[FilesEvaluated]  [FilesEvaluated],
+	[pa11].[FlagYesNo]  [FlagYesNo],
+	[pa11].[InitialTemplateInstanceId]  [InitialTemplateInstanceId],
+	[pa11].[EvalIDDesc]  [EvalIDDesc],
+	[pa11].[CreatedByUserID]  [CreatedByUserID],
+	[pa11].[AnswerNotes]  [AnswerNotes],
+	[pa11].[AnswerContent]  [AnswerContent],
+	[pa11].[CurrentTemplateAnswerKey]  [CurrentTemplateAnswerKey],
+	[pa11].[AgentID]  [AgentID],
+	[pa11].[AgentID0]  [AgentID0],
+	[pa11].[AgentID1]  [AgentID1],
+	[pa11].[GroupName]  [GroupName],
+	[pa11].[TemplateCategoryKey]  [TemplateCategoryKey],
+	[pa11].[RecordedDateKey]  [RecordedDateKey]
+from	##TTP8PPPFEMD002	[pa11]
+union
+select	[pa11].[CustCol_Site]  [CustCol_Site],
+	[pa11].[CCSiteKey]  [CCSiteKey],
+	[pa11].[CCAgentSupervisorKey]  [CCAgentSupervisorKey],
+	[pa11].[TemplateQuestionKey]  [TemplateQuestionKey],
+	[pa11].[PublishedOnUTC]  [PublishedOnUTC],
+	[pa11].[PublishedOn]  [PublishedOn],
+	[pa11].[MediaKey]  [MediaKey],
+	[pa11].[FilesEvaluated]  [FilesEvaluated],
+	[pa11].[FlagYesNo]  [FlagYesNo],
+	[pa11].[InitialTemplateInstanceId]  [InitialTemplateInstanceId],
+	[pa11].[EvalIDDesc]  [EvalIDDesc],
+	[pa11].[CreatedByUserID]  [CreatedByUserID],
+	[pa11].[AnswerNotes]  [AnswerNotes],
+	[pa11].[AnswerContent]  [AnswerContent],
+	[pa11].[CurrentTemplateAnswerKey]  [CurrentTemplateAnswerKey],
+	[pa11].[AgentID1]  [AgentID],
+	[pa11].[AgentID2]  [AgentID0],
+	[pa11].[AgentID]  [AgentID1],
+	[pa11].[GroupName]  [GroupName],
+	[pa11].[TemplateCategoryKey]  [TemplateCategoryKey],
+	[pa11].[RecordedDateKey]  [RecordedDateKey]
+from	##TASCYI90QOG004	[pa11] -- ReportName = 08. Template Analysis - Evaluation Detail by Question GC_Solving by Call Type - Auto Suggest, ReportGUID = 1870775841F80650647474B6FC44634B, UserName = AISNexidiaESI~corp-ais900~nexadmin (9A09A74012C74B01B483BE4D3F4C273B)
+
+select	distinct [pa11].[InitialTemplateInstanceId]  [InitialTemplateInstanceId],
+	[pa11].[EvalIDDesc]  [EvalIDDesc],
+	[pa11].[PublishedOn]  [PublishedOn],
+	[a114].[FullDate]  [PublishedDate_Date],
+	[pa11].[RecordedDateKey]  [RecordedDateKey],
+	[a117].[FullDate]  [CallDate_date],
+	[pa11].[MediaKey]  [MediaKey],
+	[a113].[FileName]  [CustCol_41],
+	[pa11].[CCSiteKey]  [CCSiteKey],
+	[pa13].[CCSiteName]  [CCSiteName],
+	[pa11].[AgentID1]  [AgentID],
+	[a110].[Agent]  [Agent],
+	[pa11].[CreatedByUserID]  [CreatedByUserID],
+	(Case when [a112].[LastName] = N'None' then [a112].[LastName] else CONCAT([a112].[LastName], N', ', [a112].[FirstName]) end)  [LastName],
+	[pa11].[FilesEvaluated]  [FilesEvaluated],
+	ROUND([a19].[MediaFileDuration]/1000.0,0,0)  [DurationInSec],
+	[pa11].[FlagYesNo]  [FlagYesNo],
+	[pa11].[GroupName]  [GroupName],
+	Case when [a18].[UDFvarchar30] IS NULL THEN ' ' ELSE [a18].[UDFvarchar30] End  [UDFvarchar30],
+	[pa11].[AgentID]  [AgentID1],
+	[pa11].[AgentID0]  [AgentID2],
+	Case when [a18].[UDFvarchar92] IS NULL THEN ' ' ELSE [a18].[UDFvarchar92] End  [UDFvarchar92],
+	Case when [a18].[UDFvarchar25] IS NULL THEN ' ' ELSE [a18].[UDFvarchar25] End  [UDFvarchar25],
+	Case when [a18].[UDFvarchar27] IS NULL THEN ' ' ELSE [a18].[UDFvarchar27] End  [UDFvarchar27],
+	[pa11].[CCAgentSupervisorKey]  [CCAgentSupervisorKey],
+	[a116].[CCAgentSupervisor]  [SupervisorName],
+	Case when [a18].[UDFvarchar15] IS NULL THEN ' ' ELSE [a18].[UDFvarchar15] End  [UDFvarchar15],
+	coalesce(convert(varchar(20),cast(convert(varchar(10),[a18].[UDFdate1]) as date)), ' ')  [UDFDate1_Text],
+	Case when [a18].[UDFvarchar21] IS NULL THEN ' ' ELSE [a18].[UDFvarchar21] End  [UDFvarchar21],
+	Case when [a18].[UDFvarchar31] IS NULL THEN ' ' ELSE [a18].[UDFvarchar31] End  [UDFvarchar31],
+	Case when [a18].[UDFvarchar33] IS NULL THEN ' ' ELSE [a18].[UDFvarchar33] End  [UDFvarchar33],
+	Case when [a18].[UDFvarchar32] IS NULL THEN ' ' ELSE [a18].[UDFvarchar32] End  [UDFvarchar32],
+	[pa11].[CurrentTemplateAnswerKey]  [CurrentTemplateAnswerKey],
+	[a111].[TemplateAnswer]  [TemplateAnswer],
+	[pa11].[AnswerContent]  [AnswerContent],
+	[pa11].[AnswerNotes]  [AnswerNotes],
+	[pa11].[PublishedOnUTC]  [PublishedOnUTC],
+	[pa11].[CustCol_Site]  [CustCol_Site],
+	[pa11].[TemplateCategoryKey]  [TemplateCategoryKey],
+	[a118].[TemplateCategoryName]  [TemplateCategoryName],
+	[a118].[Position]  [Position],
+	[pa11].[TemplateQuestionKey]  [TemplateQuestionKey],
+	[a115].[TemplateQuestionContent]  [TemplateQuestionContent],
+	[a115].[Position]  [Position0],
+	[pa12].[WJXBFS1]  [WJXBFS1],
+	[pa13].[WJXBFS1]  [WJXBFS2],
+	[pa12].[WJXBFS2]  [WJXBFS3],
+	[pa15].[WJXBFS1]  [WJXBFS4]
+from	##TLDFPJZE2OJ005	[pa11]
+	left outer join	##TC24K4ITMMD000	[pa12]
+	  on 	([pa11].[AgentID1] = [pa12].[AgentID1] and 
+	[pa11].[AgentID] = [pa12].[AgentID] and 
+	[pa11].[AnswerContent] = [pa12].[AnswerContent] and 
+	[pa11].[AnswerNotes] = [pa12].[AnswerNotes] and 
+	[pa11].[CCAgentSupervisorKey] = [pa12].[CCAgentSupervisorKey] and 
+	[pa11].[CCSiteKey] = [pa12].[CCSiteKey] and 
+	[pa11].[CreatedByUserID] = [pa12].[CreatedByUserID] and 
+	[pa11].[CurrentTemplateAnswerKey] = [pa12].[CurrentTemplateAnswerKey] and 
+	[pa11].[CustCol_Site] = [pa12].[CustCol_Site] and 
+	[pa11].[FilesEvaluated] = [pa12].[FilesEvaluated] and 
+	[pa11].[FlagYesNo] = [pa12].[FlagYesNo] and 
+	[pa11].[GroupName] = [pa12].[GroupName] and 
+	[pa11].[InitialTemplateInstanceId] = [pa12].[InitialTemplateInstanceId] and 
+	[pa11].[MediaKey] = [pa12].[MediaKey] and 
+	[pa11].[PublishedOnUTC] = [pa12].[PublishedOnUTC] and 
+	[pa11].[PublishedOn] = [pa12].[PublishedOn] and 
+	[pa11].[TemplateQuestionKey] = [pa12].[TemplateQuestionKey])
+	left outer join	##TMH6LD862MD001	[pa13]
+	  on 	([pa11].[AgentID1] = [pa13].[AgentID1] and 
+	[pa11].[AgentID] = [pa13].[AgentID] and 
+	[pa11].[AnswerContent] = [pa13].[AnswerContent] and 
+	[pa11].[AnswerNotes] = [pa13].[AnswerNotes] and 
+	[pa11].[CCAgentSupervisorKey] = [pa13].[CCAgentSupervisorKey] and 
+	[pa11].[CCSiteKey] = [pa13].[CCSiteKey] and 
+	[pa11].[CreatedByUserID] = [pa13].[CreatedByUserID] and 
+	[pa11].[CustCol_Site] = [pa13].[CustCol_Site] and 
+	[pa11].[FilesEvaluated] = [pa13].[FilesEvaluated] and 
+	[pa11].[FlagYesNo] = [pa13].[FlagYesNo] and 
+	[pa11].[GroupName] = [pa13].[GroupName] and 
+	[pa11].[InitialTemplateInstanceId] = [pa13].[InitialTemplateInstanceId] and 
+	[pa11].[PublishedOnUTC] = [pa13].[PublishedOnUTC] and 
+	[pa11].[PublishedOn] = [pa13].[PublishedOn] and 
+	[pa11].[TemplateQuestionKey] = [pa13].[TemplateQuestionKey])
+	left outer join	##TTP8PPPFEMD002	[pa15]
+	  on 	([pa11].[AgentID1] = [pa15].[AgentID1] and 
+	[pa11].[AgentID] = [pa15].[AgentID] and 
+	[pa11].[AnswerContent] = [pa15].[AnswerContent] and 
+	[pa11].[AnswerNotes] = [pa15].[AnswerNotes] and 
+	[pa11].[CCAgentSupervisorKey] = [pa15].[CCAgentSupervisorKey] and 
+	[pa11].[CCSiteKey] = [pa15].[CCSiteKey] and 
+	[pa11].[CreatedByUserID] = [pa15].[CreatedByUserID] and 
+	[pa11].[CurrentTemplateAnswerKey] = [pa15].[CurrentTemplateAnswerKey] and 
+	[pa11].[CustCol_Site] = [pa15].[CustCol_Site] and 
+	[pa11].[FilesEvaluated] = [pa15].[FilesEvaluated] and 
+	[pa11].[FlagYesNo] = [pa15].[FlagYesNo] and 
+	[pa11].[GroupName] = [pa15].[GroupName] and 
+	[pa11].[InitialTemplateInstanceId] = [pa15].[InitialTemplateInstanceId] and 
+	[pa11].[MediaKey] = [pa15].[MediaKey] and 
+	[pa11].[PublishedOnUTC] = [pa15].[PublishedOnUTC] and 
+	[pa11].[PublishedOn] = [pa15].[PublishedOn] and 
+	[pa11].[TemplateQuestionKey] = [pa15].[TemplateQuestionKey])
+	left outer join	##TASCYI90QOG004	[pa16]
+	  on 	([pa11].[AgentID1] = [pa16].[AgentID] and 
+	[pa11].[AgentID] = [pa16].[AgentID1] and 
+	[pa11].[AnswerContent] = [pa16].[AnswerContent] and 
+	[pa11].[AnswerNotes] = [pa16].[AnswerNotes] and 
+	[pa11].[CCAgentSupervisorKey] = [pa16].[CCAgentSupervisorKey] and 
+	[pa11].[CCSiteKey] = [pa16].[CCSiteKey] and 
+	[pa11].[CreatedByUserID] = [pa16].[CreatedByUserID] and 
+	[pa11].[CurrentTemplateAnswerKey] = [pa16].[CurrentTemplateAnswerKey] and 
+	[pa11].[CustCol_Site] = [pa16].[CustCol_Site] and 
+	[pa11].[FilesEvaluated] = [pa16].[FilesEvaluated] and 
+	[pa11].[FlagYesNo] = [pa16].[FlagYesNo] and 
+	[pa11].[GroupName] = [pa16].[GroupName] and 
+	[pa11].[InitialTemplateInstanceId] = [pa16].[InitialTemplateInstanceId] and 
+	[pa11].[MediaKey] = [pa16].[MediaKey] and 
+	[pa11].[PublishedOnUTC] = [pa16].[PublishedOnUTC] and 
+	[pa11].[PublishedOn] = [pa16].[PublishedOn] and 
+	[pa11].[TemplateQuestionKey] = [pa16].[TemplateQuestionKey])
+	left outer join	[Dossier].[vfctEvaluation]	[a17]
+	  on 	([pa11].[AgentID1] = [a17].[AgentID] and 
+	[pa11].[AgentID] = [a17].[AgentID] and 
+	[pa11].[CCAgentSupervisorKey] = [a17].[CCAgentSupervisorKey] and 
+	[pa11].[CCSiteKey] = [a17].[CCSiteKey] and 
+	[pa11].[CreatedByUserID] = [a17].[CreatedByUserID] and 
+	[pa11].[CustCol_Site] = [a17].[CCSiteName] and 
+	[pa11].[FilesEvaluated] = case when [a17].[PrimaryMediaKey] < = 0 then 0 else [a17].[FilesEvaluated] end and 
+	[pa11].[FlagYesNo] = Case when [a17].[IgnoredForAgentReporting] = 0 then 'No' else 'Yes' end and 
+	[pa11].[InitialTemplateInstanceId] = [a17].[InitialTemplateInstanceId] and 
+	[pa11].[MediaKey] = [a17].[PrimaryMediaKey] and 
+	[pa11].[PublishedOnUTC] = convert(datetime, [a17].[PublishedOnUTC]) and 
+	[pa11].[PublishedOn] = convert(date,[a17].[PublishedOnUTC]))
+	left outer join	[dim].[dimMediaUDF]	[a18]
+	  on 	([a17].[PrimaryMediaKey] = [a18].[MediaUDFKey] and 
+	[a17].[RecordedDateKey] = [a18].[RecordedDateKey])
+	left outer join	[dim].[dimMedia]	[a19]
+	  on 	([a17].[PrimaryMediaKey] = [a19].[MediaKey] and 
+	[a18].[MediaUDFKey] = [a19].[MediaKey] and 
+	[a18].[RecordedDateKey] = [a19].[RecordedDateKey] and 
+	[pa11].[MediaKey] = [a19].[MediaKey])
+	left outer join	[Dossier].[vAgent]	[a110]
+	  on 	([a17].[AgentKey] = [a110].[LegacyCCAgentKey] and 
+	[pa11].[AgentID1] = [a110].[AgentID] and 
+	[pa11].[AgentID] = [a110].[AgentID])
+	left outer join	[Evals].[dimTemplateAnswer]	[a111]
+	  on 	([pa11].[CurrentTemplateAnswerKey] = [a111].[TemplateAnswerKey] and 
+	[pa11].[TemplateQuestionKey] = [a111].[TemplateQuestionKey])
+	left outer join	[Evals].[dimUser]	[a112]
+	  on 	([a17].[CreatedByUserID] = [a112].[UserID] and 
+	[pa11].[CreatedByUserID] = [a112].[UserID])
+	left outer join	[Dossier].[vMediaFileName]	[a113]
+	  on 	([a17].[PrimaryMediaKey] = [a113].[PrimaryMediaKey] and 
+	[pa11].[MediaKey] = [a113].[PrimaryMediaKey])
+	left outer join	[dim].[dimDate]	[a114]
+	  on 	([pa11].[PublishedOn] = convert(date,[a114].[FullDate]) and 
+	convert(date,[a17].[ModifiedDateUTC]) = convert(date,[a114].[FullDate]))
+	left outer join	[Evals].[dimTemplateQuestion]	[a115]
+	  on 	([pa11].[TemplateQuestionKey] = [a115].[TemplateQuestionKey])
+	left outer join	[dbo].[dimCCAgentSupervisor]	[a116]
+	  on 	([pa11].[CCAgentSupervisorKey] = [a116].[CCAgentSupervisorKey])
+	left outer join	[dim].[dimDate]	[a117]
+	  on 	([pa11].[RecordedDateKey] = [a117].[DateKey])
+	left outer join	[Evals].[dimTemplateCategory]	[a118]
+	  on 	([pa11].[TemplateCategoryKey] = [a118].[TemplateCategoryKey]) -- ReportName = 08. Template Analysis - Evaluation Detail by Question GC_Solving by Call Type - Auto Suggest, ReportGUID = 1870775841F80650647474B6FC44634B, UserName = AISNexidiaESI~corp-ais900~nexadmin (9A09A74012C74B01B483BE4D3F4C273B)
+
+drop table ##TC24K4ITMMD000
+
+drop table ##TMH6LD862MD001
+
+drop table ##TTP8PPPFEMD002
+
+drop table ##TKBAJMR7USQ003
+
+drop table ##TASCYI90QOG004
+
+drop table ##TLDFPJZE2OJ005
+
+[Analytical engine calculation steps:
+	1.  Perform dynamic aggregation over <Published Date, Site, Media Files, Interaction Duration, Ignored for Agent Reporting Flag (Yes No), Answer Content, Answer Notes>
+	2.  Perform cross-tabbing
+]
