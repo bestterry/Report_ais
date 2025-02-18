@@ -15,7 +15,7 @@ DECLARE @Today date = GETDATE()
 				'WHERE (convert(date,[a11].[PublishedOnUTC]) BETWEEN DATEADD(MONTH, -1, DATEADD(DAY, 1, EOMONTH(GETDATE(), -1))) AND EOMONTH(GETDATE(), -1)) '+
                 'AND [a11].[TemplateKey] in (218) ' + 
 				'AND [a11].[IgnoredForAgentReporting] = 0 AND convert(date,[a11].[PublishedOnUTC]) is not null AND [a11].[RescoreIsActive] = 0 AND CASE WHEN ([a11].[AcknowledgedOnUTC] Is Null) then 0 else 1 end in (1, 0)  AND [a11].[IsPurgedInEvals] in (0) AND [a11].[EvaluationType] not in (N''C-'') AND [a11].[EvaluationType] in (N''S-'', N''E-'')'+
-				'ORDER BY DisplayId ASC';
+				'ORDER BY DisplayId ASC, TemplateCategoryName ASC, TemplateQuestionContent ASC';
         END
     ELSE
         BEGIN
@@ -25,24 +25,28 @@ DECLARE @Today date = GETDATE()
 				'WHERE (convert(date,[a11].[PublishedOnUTC]) BETWEEN DATEADD(DAY, 1, EOMONTH(GETDATE(), -1)) AND DATEADD(DAY, -1, CAST(GETDATE() AS DATE))) ' + 
                 'AND [a11].[TemplateKey] in (218) ' + 
 				'AND [a11].[IgnoredForAgentReporting] = 0 AND convert(date,[a11].[PublishedOnUTC]) is not null AND [a11].[RescoreIsActive] = 0 AND CASE WHEN ([a11].[AcknowledgedOnUTC] Is Null) then 0 else 1 end in (1, 0)  AND [a11].[IsPurgedInEvals] in (0) AND [a11].[EvaluationType] not in (N''C-'') AND [a11].[EvaluationType] in (N''S-'', N''E-'')'+
-				'ORDER BY DisplayId ASC';
+				'ORDER BY DisplayId ASC, TemplateCategoryName ASC, TemplateQuestionContent ASC';
         END
-    -- Set the filename with today's date
-    SET @fileName = '05.Save_ChurnbyCall-AutoSuggest_'+FORMAT(DATEADD(DAY, -1, GETDATE()), 'ddMMyyyy')+'.csv';
 
-    -- Set the file path
-    SET @path = 'E:\Question_Report\' + @fileName;
+         EXEC sp_executesql @query;
 
-    -- Construct the BCP command
-    SET @SQL = 'bcp "'
-            + @query
-            + '" queryout "'
-            + @path
-            + '" -c -t, -C 65001 -T -S PNXDIAD901G\NIAIADB';
 
-    -- Execute the command
-    SET @command_string = CAST(@SQL AS VARCHAR(MAX));
-    EXEC xp_cmdshell @command_string;
+        -- -- Set the filename with today's date
+        -- SET @fileName = '05.Save_ChurnbyCall-AutoSuggest_'+FORMAT(DATEADD(DAY, -1, GETDATE()), 'ddMMyyyy')+'.csv';
 
-    SET @SQL = 'powershell -Command "[System.IO.File]::WriteAllBytes(''' + @path + ''', [System.Text.Encoding]::UTF8.GetPreamble() + [System.IO.File]::ReadAllBytes(''' + @path + '''))"';
-	EXEC xp_cmdshell @SQL;
+        -- -- Set the file path
+        -- SET @path = 'E:\Question_Report\' + @fileName;
+
+        -- -- Construct the BCP command
+        -- SET @SQL = 'bcp "'
+        --         + @query
+        --         + '" queryout "'
+        --         + @path
+        --         + '" -c -t, -C 65001 -T -S PNXDIAD901G\NIAIADB';
+
+        -- -- Execute the command
+        -- SET @command_string = CAST(@SQL AS VARCHAR(MAX));
+        -- EXEC xp_cmdshell @command_string;
+
+        -- SET @SQL = 'powershell -Command "[System.IO.File]::WriteAllBytes(''' + @path + ''', [System.Text.Encoding]::UTF8.GetPreamble() + [System.IO.File]::ReadAllBytes(''' + @path + '''))"';
+        -- EXEC xp_cmdshell @SQL;

@@ -1,4 +1,3 @@
--- Define Query (Ensure proper syntax for bcp)
 DECLARE @fileName VARCHAR(MAX);
 DECLARE @path VARCHAR(MAX);
 DECLARE @SQL VARCHAR(8000);
@@ -16,7 +15,7 @@ DECLARE @Today date = GETDATE()
 				'WHERE (convert(date,[a11].[PublishedOnUTC]) BETWEEN DATEADD(MONTH, -1, DATEADD(DAY, 1, EOMONTH(GETDATE(), -1))) AND EOMONTH(GETDATE(), -1)) '+
                 'AND [a11].[TemplateKey] in (123) ' + 
 				'AND [a11].[IgnoredForAgentReporting] = 0 AND convert(date,[a11].[PublishedOnUTC]) is not null AND [a11].[RescoreIsActive] = 0 AND CASE WHEN ([a11].[AcknowledgedOnUTC] Is Null) then 0 else 1 end in (1, 0)  AND [a11].[IsPurgedInEvals] in (0) AND [a11].[EvaluationType] not in (N''C-'') AND [a11].[EvaluationType] in (N''S-'', N''E-'')'+
-				'ORDER BY DisplayId ASC';
+				'ORDER BY DisplayId ASC, TemplateCategoryName ASC, TemplateQuestionContent ASC';
         END
     ELSE
         BEGIN
@@ -26,7 +25,7 @@ DECLARE @Today date = GETDATE()
 				'WHERE (convert(date,[a11].[PublishedOnUTC]) BETWEEN DATEADD(DAY, 1, EOMONTH(GETDATE(), -1)) AND DATEADD(DAY, -1, CAST(GETDATE() AS DATE))) ' + 
                 'AND [a11].[TemplateKey] in (123) ' + 
 				'AND [a11].[IgnoredForAgentReporting] = 0 AND convert(date,[a11].[PublishedOnUTC]) is not null AND [a11].[RescoreIsActive] = 0 AND CASE WHEN ([a11].[AcknowledgedOnUTC] Is Null) then 0 else 1 end in (1, 0)  AND [a11].[IsPurgedInEvals] in (0) AND [a11].[EvaluationType] not in (N''C-'') AND [a11].[EvaluationType] in (N''S-'', N''E-'')'+
-				'ORDER BY DisplayId ASC';
+				'ORDER BY DisplayId ASC, TemplateCategoryName ASC, TemplateQuestionContent ASC';
         END
     -- Set the filename with today's date
 
